@@ -17,6 +17,7 @@ class Plugin {
 			->set_cost(VPS_HD_COST)->set_require_ip(false)->set_enable(function() {
 			})->set_disable(function() {
 			})->register();
+		$service->add_addon($addon);
 	}
 
 }
