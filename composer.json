@@ -24,6 +24,6 @@
 	"detain/hd-licensing": "*"
     },
     "autoload": {
-        "psr-4": {"Detain\\MyAdminVpsHd\": "src/"}
+        "psr-4": {"Detain\\MyAdminVpsHd\\": "src/"}
     }
 }
