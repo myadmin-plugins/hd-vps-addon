@@ -20,4 +20,9 @@ class Plugin {
 		$service->add_addon($addon);
 	}
 
+	public static function Settings(GenericEvent $event) {
+		$module = 'vps';
+		$settings = $event->getSubject();
+		$settings->add_text_setting($module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
+	}
 }
