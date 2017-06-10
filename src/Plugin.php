@@ -15,6 +15,11 @@ class Plugin {
 		$addon = new \Addon();
 		$addon->set_module('vps')->set_text('Additional GB')->set_text_match('Additional (.*) GB')
 			->set_cost(VPS_HD_COST)->set_require_ip(false)->set_enable(function() {
+				$service_info = $service_order->get_service_info();
+				$settings = get_module_settings($service_order->get_module());
+				require_once 'include/licenses/license.functions.inc.php';
+				myadmin_log($service_order->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$service_info[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+				$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $service_info[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $service_info[$settings['PREFIX'] . '_custid']);
 			})->set_disable(function() {
 			})->register();
 		$service->add_addon($addon);
