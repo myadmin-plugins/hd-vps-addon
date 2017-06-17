@@ -39,19 +39,19 @@ class Plugin {
 	}
 
 	public static function Enable($service_order) {
-		$service_info = $service_order->get_service_info();
+		$serviceInfo = $service_order->getServiceInfo();
 		$settings = get_module_settings($service_order->get_module());
 		require_once 'include/licenses/license.functions.inc.php';
-		myadmin_log($service_order->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$service_info[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
-		$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $service_info[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $service_info[$settings['PREFIX'] . '_custid']);
+		myadmin_log($service_order->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $serviceInfo[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'] . '_custid']);
 	}
 
 	public static function Disable($service_order) {
-		$service_info = $service_order->get_service_info();
+		$serviceInfo = $service_order->getServiceInfo();
 		$settings = get_module_settings($service_order->get_module());
 		require_once 'include/licenses/license.functions.inc.php';
-		myadmin_log($service_order->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$service_info[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
-		$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $service_info[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $service_info[$settings['PREFIX'] . '_custid']);
+		myadmin_log($service_order->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $serviceInfo[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'] . '_custid']);
 	}
 
 	public static function Settings(GenericEvent $event) {
