@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
-	public static $name = 'Hd Licensing VPS Addon';
+	public static $name = 'Additional HD Space VPS Addon';
 	public static $description = 'Allows selling of Hd Server and VPS License Types.  More info at https://www.netenberg.com/hd.php';
 	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a hd license. Allow 10 minutes for activation.';
 	public static $module = 'vps';
@@ -32,10 +32,10 @@ class Plugin {
 			->set_text_match('Additional (.*) GB')
 			->set_cost(VPS_HD_COST)
 			->set_require_ip(false)
-			->set_enable(['Detain\MyAdminVpsHd\Plugins', 'Enable'])
-			->set_disable(['Detain\MyAdminVpsHd\Plugins', 'Disable'])
+			->set_enable([__CLASS__, 'Enable'])
+			->set_disable([__CLASS__, 'Disable'])
 			->register();
-		$service_order->add_addon($addon);
+		$service->add_addon($addon);
 	}
 
 	public static function Enable($service_order) {
