@@ -19,7 +19,7 @@ class Plugin {
 	public static function getHooks() {
 		return [
 			'vps.load_addons' => [__CLASS__, 'Load'],
-			'vps.settings' => [__CLASS__, 'Settings'],
+			'vps.settings' => [__CLASS__, 'getSettings'],
 		];
 	}
 
@@ -54,7 +54,7 @@ class Plugin {
 		$GLOBALS['tf']->history->add($service_order->get_module() . 'queue', $serviceInfo[$settings['PREFIX'] . '_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'] . '_custid']);
 	}
 
-	public static function Settings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event) {
 		$module = 'vps';
 		$settings = $event->getSubject();
 		$settings->add_text_setting($module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
