@@ -42,7 +42,7 @@ class Plugin {
 		$serviceInfo = $serviceOrder->getServiceInfo();
 		$settings = get_module_settings($serviceOrder->get_module());
 		require_once 'include/licenses/license.functions.inc.php';
-		myadmin_log($serviceOrder->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		myadmin_log($serviceOrder->get_module(), 'info', "activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
 		$GLOBALS['tf']->history->add($serviceOrder->get_module().'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 	}
 
@@ -50,7 +50,7 @@ class Plugin {
 		$serviceInfo = $serviceOrder->getServiceInfo();
 		$settings = get_module_settings($serviceOrder->get_module());
 		require_once 'include/licenses/license.functions.inc.php';
-		myadmin_log($serviceOrder->get_module(), 'info', "Activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		myadmin_log($serviceOrder->get_module(), 'info', "activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
 		$GLOBALS['tf']->history->add($serviceOrder->get_module().'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 	}
 
