@@ -27,7 +27,7 @@ class Plugin {
 		$service = $event->getSubject();
 		function_requirements('class.Addon');
 		$addon = new \Addon();
-		$addon->set_module('vps')
+		$addon->setModule('vps')
 			->set_text('Additional GB')
 			->set_text_match('Additional (.*) GB')
 			->set_cost(VPS_HD_COST)
