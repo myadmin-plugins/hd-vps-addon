@@ -18,8 +18,8 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
-			'vps.load_addons' => [__CLASS__, 'getAddon'],
-			'vps.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.load_addons' => [__CLASS__, 'getAddon'],
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 		];
 	}
 
@@ -27,7 +27,7 @@ class Plugin {
 		$service = $event->getSubject();
 		function_requirements('class.Addon');
 		$addon = new \Addon();
-		$addon->setModule('vps')
+		$addon->setModule(self::$module)
 			->set_text('Additional GB')
 			->set_text_match('Additional (.*) GB')
 			->set_cost(VPS_HD_COST)
@@ -40,23 +40,22 @@ class Plugin {
 
 	public static function doEnable(\Service_Order $serviceOrder, $repeatInvoiceId, $regexMatch = false) {
 		$serviceInfo = $serviceOrder->getServiceInfo();
-		$settings = get_module_settings($serviceOrder->getModule());
-		require_once __DIR__.'/../../../../include/licenses/license.functions.inc.php';
-		myadmin_log($serviceOrder->getModule(), 'info', "activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
-		$GLOBALS['tf']->history->add($serviceOrder->getModule().'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
+		$settings = get_module_settings(self::$module);
+		$space = $regexMatch;
+		myadmin_log($module, 'info', "Activating {$space} GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		$GLOBALS['tf']->history->add(self::$module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 	}
 
 	public static function doDisable(\Service_Order $serviceOrder) {
 		$serviceInfo = $serviceOrder->getServiceInfo();
-		$settings = get_module_settings($serviceOrder->getModule());
+		$settings = get_module_settings(self::$module);
 		require_once __DIR__.'/../../../../include/licenses/license.functions.inc.php';
-		myadmin_log($serviceOrder->getModule(), 'info', "activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
-		$GLOBALS['tf']->history->add($serviceOrder->getModule().'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
+		myadmin_log(self::$module, 'info', "activating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
+		$GLOBALS['tf']->history->add(self::$module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 	}
 
 	public static function getSettings(GenericEvent $event) {
-		$module = 'vps';
 		$settings = $event->getSubject();
-		$settings->add_text_setting($module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
+		$settings->add_text_setting(self::$module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
 	}
 }
