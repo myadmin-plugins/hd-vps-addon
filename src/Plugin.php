@@ -46,12 +46,21 @@ class Plugin {
 		$GLOBALS['tf']->history->add(self::$module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 	}
 
-	public static function doDisable(\Service_Order $serviceOrder) {
+	public static function doDisable(\Service_Order $serviceOrder, $repeatInvoiceId, $regexMatch = FALSE) {
 		$serviceInfo = $serviceOrder->getServiceInfo();
 		$settings = get_module_settings(self::$module);
 		require_once __DIR__.'/../../../../include/licenses/license.functions.inc.php';
+		$space = $regexMatch;
 		myadmin_log(self::$module, 'info', self::$name." Deactivating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
 		$GLOBALS['tf']->history->add(self::$module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
+		add_output('Additional '.$space.' GB HD Space Removed And Canceled');
+		$email = $settings['TBLNAME'].' ID: '.$serviceInfo[$settings['PREFIX'].'_id'].'<br>'.$settings['TBLNAME'].' Hostname: '.$serviceInfo[$settings['PREFIX'].'_hostname'].'<br>'."Invoice: $repeatInvoiceId<br>" . "Additional Space : $space GB<br>" . "Description: {$repeat_invoice->getDescription()}<br>";
+		$subject = $settings['TBLNAME'].' '.$repeat_invoice->getService().' Canceled Additional '.$space.' GB HD Space';
+		$headers = '';
+		$headers .= 'MIME-Version: 1.0'.EMAIL_NEWLINE;
+		$headers .= 'Content-type: text/html; charset=UTF-8'.EMAIL_NEWLINE;
+		$headers .= 'From: '.$settings['TITLE'].' <'.$settings['EMAIL_FROM'].'>'.EMAIL_NEWLINE;
+		admin_mail($subject, $email, $headers, false, 'admin_email_vps_hdspace_canceled.tpl');
 	}
 
 	public static function getSettings(GenericEvent $event) {
