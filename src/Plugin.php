@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
-	public static $name = 'Additional HD Space VPS Addon';
+	public static $name = 'HD Space VPS Addon';
 	public static $description = 'Allows selling of HD Space Upgrades to a VPS.';
 	public static $help = '';
 	public static $module = 'vps';
