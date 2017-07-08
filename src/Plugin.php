@@ -54,8 +54,8 @@ class Plugin {
 		myadmin_log(self::$module, 'info', self::$name." Deactivating $space GB additional HD space for {$settings['TBLNAME']} {$serviceInfo[$settings['PREFIX'].'_id']}", __LINE__, __FILE__);
 		$GLOBALS['tf']->history->add(self::$module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', $space, $serviceInfo[$settings['PREFIX'].'_custid']);
 		add_output('Additional '.$space.' GB HD Space Removed And Canceled');
-		$email = $settings['TBLNAME'].' ID: '.$serviceInfo[$settings['PREFIX'].'_id'].'<br>'.$settings['TBLNAME'].' Hostname: '.$serviceInfo[$settings['PREFIX'].'_hostname'].'<br>'."Invoice: $repeatInvoiceId<br>" . "Additional Space : $space GB<br>" . "Description: {$repeat_invoice->getDescription()}<br>";
-		$subject = $settings['TBLNAME'].' '.$repeat_invoice->getService().' Canceled Additional '.$space.' GB HD Space';
+		$email = $settings['TBLNAME'].' ID: '.$serviceInfo[$settings['PREFIX'].'_id'].'<br>'.$settings['TBLNAME'].' Hostname: '.$serviceInfo[$settings['PREFIX'].'_hostname'].'<br>Repeat Invoice: '.$repeatInvoiceId.'<br>Additional Space: '.$space.' GB<br>Description: '.self::$name.'<br>';
+		$subject = $settings['TBLNAME'].' '.$serviceInfo[$settings['PREFIX'].'_id'].' Canceled Additional '.$space.' GB HD Space';
 		$headers = '';
 		$headers .= 'MIME-Version: 1.0'.EMAIL_NEWLINE;
 		$headers .= 'Content-type: text/html; charset=UTF-8'.EMAIL_NEWLINE;
