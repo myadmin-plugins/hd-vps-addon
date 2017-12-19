@@ -28,9 +28,18 @@ class Plugin {
 	 */
 	public static function getHooks() {
 		return [
+			'function.requirements' => [__CLASS__, 'getRequirements'],
 			self::$module.'.load_addons' => [__CLASS__, 'getAddon'],
 			self::$module.'.settings' => [__CLASS__, 'getSettings']
 		];
+	}
+
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
+	public static function getRequirements(GenericEvent $event) {
+		$loader = $event->getSubject();
+		$loader->add_page_requirement('vps_hdspace', '/../vendor/detain/myadmin-hd-vps-addon/src/vps_hdspace.php');
 	}
 
 	/**
