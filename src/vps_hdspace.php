@@ -49,7 +49,7 @@ function vps_hdspace() {
 		$table->add_row();
 	}
 	$frequency = $serviceInfo[$settings['PREFIX'].'_frequency'];
-	$gbcost = round($frequency * get_reseller_price($module, 'hd', VPS_HD_COST), 2);
+	$gbcost = round(get_reseller_price($module, 'hd', VPS_HD_COST), 2);
 	$cost = $gbcost;
 	$size = 0;
 	$repeat_invoice = new \MyAdmin\Orm\Repeat_Invoice($db);
@@ -89,6 +89,10 @@ function vps_hdspace() {
 		$new_date = date('Y-m-d 01:01:01');
 		$diffcost = $cost;
 	}
+	if ($frequency > 1)
+		$diffcost = round($diffcost + ($cost * ($frequency - 1)), 2);
+	$cost = round($cost * $frequency, 2);
+
 	if (!isset($GLOBALS['tf']->variables->request['confirm']) || $GLOBALS['tf']->variables->request['confirm'] != 'yes') {
 		$table->csrf('additional_hd');
 		$GLOBALS['tf']->add_html_head_js_string('
@@ -136,10 +140,10 @@ function vps_hdspace() {
 			myadmin_log('vps', 'info', '  VPS ID: '.$serviceInfo[$settings['PREFIX'].'_id'], __LINE__, __FILE__);
 			myadmin_log('vps', 'info', '  VPS Cust ID: '.$serviceInfo[$settings['PREFIX'].'_custid'], __LINE__, __FILE__);
 			myadmin_log('vps', 'info', '  VPS Hostname: '.$serviceInfo[$settings['PREFIX'].'_hostname'], __LINE__, __FILE__);
-			myadmin_log('vps', 'info', "	New Size: $size", __LINE__, __FILE__);
-			myadmin_log('vps', 'info', "	Previous Update Size: $cursize", __LINE__, __FILE__);
-			myadmin_log('vps', 'info', "	New Cost: $cost", __LINE__, __FILE__);
-			myadmin_log('vps', 'info', "	Diff Cost: $diffcost", __LINE__, __FILE__);
+			myadmin_log('vps', 'info', "	New Size: {$size}", __LINE__, __FILE__);
+			myadmin_log('vps', 'info', "	Previous Update Size: {$cursize}", __LINE__, __FILE__);
+			myadmin_log('vps', 'info', "	New Cost: {$cost}", __LINE__, __FILE__);
+			myadmin_log('vps', 'info', "	Diff Cost: {$diffcost}", __LINE__, __FILE__);
 			if ($size != $cursize) {
 				$description = 'Additional '.$size.' GB Space for '.$settings['TBLNAME'].' '.$serviceInfo[$settings['PREFIX'].'_id'];
 				// check if they previously purchased additional drive space
@@ -174,12 +178,12 @@ function vps_hdspace() {
 						->setService($id)
 						->save();
 					$rid = $repeat_invoice->get_id();
-					myadmin_log('vps', 'info', "	Created new \MyAdmin\Orm\Invoice $rid", __LINE__, __FILE__);
+					myadmin_log('vps', 'info', "	Created new \\MyAdmin\\Orm\\Invoice {$rid}", __LINE__, __FILE__);
 				}
 				if ($diffcost > 0) {
 					$invoice = $repeat_invoice->invoice($new_date, (float)$diffcost, FALSE);
 					$iid = $invoice->get_id();
-					myadmin_log('vps', 'info', "	Created Invoice $iid For $diffcost", __LINE__, __FILE__);
+					myadmin_log('vps', 'info', "	Created Invoice {$iid} For {$diffcost}", __LINE__, __FILE__);
 					add_output('Invoice Created, Please Pay This To Activate Extra Space<br>');
 				} else {
 					myadmin_log('vps', 'info', '	Queued Drive Update', __LINE__, __FILE__);
