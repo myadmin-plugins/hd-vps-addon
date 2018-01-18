@@ -24,5 +24,5 @@ composer require detain/myadmin-hd-vps-addon
 
 ## License
 
-The Hd Addon for VPS Module in MyAdmin class is licensed under the LGPL-v2 license.
+The Hd Addon for VPS Module in MyAdmin class is licensed under the LGPL-v2.1 license.
 
