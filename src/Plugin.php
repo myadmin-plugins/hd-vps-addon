@@ -9,8 +9,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  *
  * @package Detain\MyAdminVpsHd
  */
-class Plugin {
-
+class Plugin
+{
 	public static $name = 'HD Space VPS Addon';
 	public static $description = 'Allows selling of HD Space Upgrades to a VPS.';
 	public static $help = '';
@@ -20,13 +20,15 @@ class Plugin {
 	/**
 	 * Plugin constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	/**
 	 * @return array
 	 */
-	public static function getHooks() {
+	public static function getHooks()
+	{
 		return [
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 			self::$module.'.load_addons' => [__CLASS__, 'getAddon'],
@@ -37,7 +39,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getRequirements(GenericEvent $event) {
+	public static function getRequirements(GenericEvent $event)
+	{
 		$loader = $event->getSubject();
 		$loader->add_page_requirement('vps_hdspace', '/../vendor/detain/myadmin-hd-vps-addon/src/vps_hdspace.php');
 	}
@@ -45,7 +48,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getAddon(GenericEvent $event) {
+	public static function getAddon(GenericEvent $event)
+	{
 		/**
 		 * @var \ServiceHandler $service
 		 */
@@ -56,7 +60,7 @@ class Plugin {
 			->set_text('Additional GB')
 			->set_text_match('Additional (.*) GB')
 			->set_cost(VPS_HD_COST)
-			->set_require_ip(FALSE)
+			->set_require_ip(false)
 			->setEnable([__CLASS__, 'doEnable'])
 			->setDisable([__CLASS__, 'doDisable'])
 			->register();
@@ -68,7 +72,8 @@ class Plugin {
 	 * @param                $repeatInvoiceId
 	 * @param bool           $regexMatch
 	 */
-	public static function doEnable(\ServiceHandler $serviceOrder, $repeatInvoiceId, $regexMatch = FALSE) {
+	public static function doEnable(\ServiceHandler $serviceOrder, $repeatInvoiceId, $regexMatch = false)
+	{
 		$serviceInfo = $serviceOrder->getServiceInfo();
 		$settings = get_module_settings(self::$module);
 		$space = $regexMatch;
@@ -81,7 +86,8 @@ class Plugin {
 	 * @param                $repeatInvoiceId
 	 * @param bool           $regexMatch
 	 */
-	public static function doDisable(\ServiceHandler $serviceOrder, $repeatInvoiceId, $regexMatch = FALSE) {
+	public static function doDisable(\ServiceHandler $serviceOrder, $repeatInvoiceId, $regexMatch = false)
+	{
 		$serviceInfo = $serviceOrder->getServiceInfo();
 		$settings = get_module_settings(self::$module);
 		require_once __DIR__.'/../../../../include/licenses/license.functions.inc.php';
@@ -95,13 +101,14 @@ class Plugin {
 		$headers .= 'MIME-Version: 1.0'.PHP_EOL;
 		$headers .= 'Content-type: text/html; charset=UTF-8'.PHP_EOL;
 		$headers .= 'From: '.$settings['TITLE'].' <'.$settings['EMAIL_FROM'].'>'.PHP_EOL;
-		admin_mail($subject, $email, $headers, FALSE, 'admin/vps_hdspace_canceled.tpl');
+		admin_mail($subject, $email, $headers, false, 'admin/vps_hdspace_canceled.tpl');
 	}
 
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event)
+	{
 		$settings = $event->getSubject();
 		$settings->add_text_setting(self::$module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
 	}

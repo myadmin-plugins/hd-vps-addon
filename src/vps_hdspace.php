@@ -14,7 +14,8 @@
  * @throws \Exception
  * @throws \SmartyException
  */
-function vps_hdspace() {
+function vps_hdspace()
+{
 	$module = 'vps';
 	$settings = get_module_settings($module);
 	page_title('Purchase Additional VPS HD Space');
@@ -30,8 +31,9 @@ function vps_hdspace() {
 	$GLOBALS['tf']->accounts->set_db_module('vps');
 	$extra = parse_vps_extra($serviceInfo['vps_extra']);
 	$table = new TFTable;
-	if (mb_strpos($_SERVER['PHP_SELF'], 'iframe.php') !== false)
+	if (mb_strpos($_SERVER['PHP_SELF'], 'iframe.php') !== false) {
 		$table->set_post_location('iframe.php');
+	}
 	$table->add_hidden('id', $serviceInfo[$settings['PREFIX'].'_id']);
 	$table->set_title('Additional VPS Drive Space');
 	$table->add_field('VPS ID', 'r');
@@ -57,9 +59,9 @@ function vps_hdspace() {
 	if (count($repeat_invoices) > 0) {
 		$repeat_invoice->load_real($repeat_invoices[0]);
 		$rinv = $repeat_invoice->get_raw_row();
-		if (preg_match('/Additional (.*) GB Space/', $repeat_invoice->get_description(), $matches))
+		if (preg_match('/Additional (.*) GB Space/', $repeat_invoice->get_description(), $matches)) {
 			$size = $matches[1];
-		else {
+		} else {
 			add_output('Unable to get current addon disk usage.. please contact support@interserver.net about this');
 			return false;
 		}
@@ -68,8 +70,9 @@ function vps_hdspace() {
 		$table->add_row();
 	}
 	$cursize = $size;
-	if (isset($GLOBALS['tf']->variables->request['size']))
+	if (isset($GLOBALS['tf']->variables->request['size'])) {
 		$size = (int)$GLOBALS['tf']->variables->request['size'];
+	}
 	$cost = $size * $cost;
 	$service_invoice = new \MyAdmin\Orm\Repeat_Invoice($db);
 	$service_invoice = $service_invoice->load_real($serviceInfo[$settings['PREFIX'].'_invoice']);
@@ -78,10 +81,11 @@ function vps_hdspace() {
 		$new_date = date('Y-m').'-'.date('d', $service_date).' 01:01:01';
 		$curday = date('d');
 		$oday = date('d', $service_date);
-		if ($curday >= $oday)
+		if ($curday >= $oday) {
 			$diffday = $curday - $oday;
-		else
+		} else {
 			$diffday = $oday - $curday;
+		}
 		$daysinmonth = date('t');
 		$daycost = $cost / $daysinmonth;
 		$diffcost = number_format(($daysinmonth - $diffday) * $daycost, 2);
@@ -89,8 +93,9 @@ function vps_hdspace() {
 		$new_date = date('Y-m-d 01:01:01');
 		$diffcost = $cost;
 	}
-	if ($frequency > 1)
+	if ($frequency > 1) {
 		$diffcost = round($diffcost + ($cost * ($frequency - 1)), 2);
+	}
 	$cost = round($cost * $frequency, 2);
 
 	if (!isset($GLOBALS['tf']->variables->request['confirm']) || $GLOBALS['tf']->variables->request['confirm'] != 'yes') {
@@ -134,7 +139,7 @@ function vps_hdspace() {
 		$table->add_field($table->make_submit('Continue'));
 		$table->add_row();
 		add_output($table->get_table());
-	} elseif(verify_csrf('additional_hd')) {
+	} elseif (verify_csrf('additional_hd')) {
 		if ($size >= 1 && $size <= 100) {
 			myadmin_log('vps', 'info', 'Update Additional Drive Space Function Called', __LINE__, __FILE__);
 			myadmin_log('vps', 'info', '  VPS ID: '.$serviceInfo[$settings['PREFIX'].'_id'], __LINE__, __FILE__);
@@ -167,7 +172,7 @@ function vps_hdspace() {
 					}
 				} else {
 					$repeat_invoice = new \MyAdmin\Orm\Repeat_Invoice($db);
-					$repeat_invoice->setId(NULL)
+					$repeat_invoice->setId(null)
 						->setDescription($description)
 						->setType(1)
 						->setCost($cost)
@@ -181,7 +186,7 @@ function vps_hdspace() {
 					myadmin_log('vps', 'info', "	Created new \\MyAdmin\\Orm\\Invoice {$rid}", __LINE__, __FILE__);
 				}
 				if ($diffcost > 0) {
-					$invoice = $repeat_invoice->invoice($new_date, (float)$diffcost, FALSE);
+					$invoice = $repeat_invoice->invoice($new_date, (float)$diffcost, false);
 					$iid = $invoice->get_id();
 					myadmin_log('vps', 'info', "	Created Invoice {$iid} For {$diffcost}", __LINE__, __FILE__);
 					add_output('Invoice Created, Please Pay This To Activate Extra Space<br>');
@@ -195,9 +200,11 @@ function vps_hdspace() {
 					function_requirements('view_vps');
 					view_vps($serviceInfo[$settings['PREFIX'].'_id']);
 				}
-			} else
+			} else {
 				add_output('No Change Made, Size The Same');
-		} else
+			}
+		} else {
 			add_output('Invalid Size Specified');
+		}
 	}
 }
