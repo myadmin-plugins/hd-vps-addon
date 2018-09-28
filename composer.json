@@ -1,5 +1,5 @@
 {
-	"name": "detain/hd-vps-addon",
+	"name": "detain/myadmin-hd-vps-addon",
 	"type": "myadmin-plugin",
 	"description": "Hd Addon for VPS Module in MyAdmin",
 	"keywords": [
