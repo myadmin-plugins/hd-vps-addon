@@ -41,7 +41,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-		$loader = $event->getSubject();
+        /**
+         * @var \MyAdmin\Plugins\Loader $this->loader
+         */
+        $loader = $event->getSubject();
 		$loader->add_page_requirement('vps_hdspace', '/../vendor/detain/myadmin-hd-vps-addon/src/vps_hdspace.php');
 	}
 
@@ -107,9 +110,12 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event)
-	{
-		$settings = $event->getSubject();
-		$settings->add_text_setting(self::$module, 'Addon Costs', 'vps_hd_cost', 'VPS Additional HD Space Cost:', 'This is the cost for purchasing additional HD space for a VPS.', $settings->get_setting('VPS_HD_COST'));
+    public static function getSettings(GenericEvent $event)
+    {
+        /**
+         * @var \MyAdmin\Settings $settings
+         **/
+        $settings = $event->getSubject();
+		$settings->add_text_setting(self::$module, __('Addon Costs'), 'vps_hd_cost', __('VPS Additional HD Space Cost'), __('This is the cost for purchasing additional HD space for a VPS.'), $settings->get_setting('VPS_HD_COST'));
 	}
 }
