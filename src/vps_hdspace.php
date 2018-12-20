@@ -28,7 +28,6 @@ function vps_hdspace()
 		dialog('Invalid VPS', 'Invalid VPS ID Passed');
 		return false;
 	}
-	$GLOBALS['tf']->accounts->set_db_module('vps');
 	$extra = parse_vps_extra($serviceInfo['vps_extra']);
 	$table = new TFTable;
 	if (mb_strpos($_SERVER['PHP_SELF'], 'iframe.php') !== false) {
