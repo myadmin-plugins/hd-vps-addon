@@ -190,7 +190,7 @@ function vps_hdspace()
 					myadmin_log('vps', 'info', "	Created Invoice {$iid} For {$diffcost}", __LINE__, __FILE__);
 					add_output('Invoice Created, Please Pay This To Activate Extra Space<br>');
 				} else {
-					myadmin_log('vps', 'info', '	Queued Drive Update', __LINE__, __FILE__);
+					myadmin_log('vps', 'info', '	Queued Drive Update', __LINE__, __FILE__, $module);
 					//got here if the space shrank
 					add_output('Repeat Invoice Updated, Server Size Update Queued');
 					$GLOBALS['tf']->history->add($module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', '', $serviceInfo[$settings['PREFIX'].'_custid']);
