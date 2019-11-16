@@ -100,7 +100,7 @@ class Plugin
 		add_output('Additional '.$space.' GB HD Space Removed And Canceled');
 		$email = $settings['TBLNAME'].' ID: '.$serviceInfo[$settings['PREFIX'].'_id'].'<br>'.$settings['TBLNAME'].' Hostname: '.$serviceInfo[$settings['PREFIX'].'_hostname'].'<br>Repeat Invoice: '.$repeatInvoiceId.'<br>Additional Space: '.$space.' GB<br>Description: '.self::$name.'<br>';
 		$subject = $settings['TBLNAME'].' '.$serviceInfo[$settings['PREFIX'].'_id'].' Canceled Additional '.$space.' GB HD Space';
-		(new MyAdmin\Mail())->adminMail($subject, $email, false, 'admin/vps_hdspace_canceled.tpl');
+		(new \MyAdmin\Mail())->adminMail($subject, $email, false, 'admin/vps_hdspace_canceled.tpl');
 	}
 
 	/**
