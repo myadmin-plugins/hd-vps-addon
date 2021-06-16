@@ -49,7 +49,8 @@ function vps_hdspace()
 		$table->add_field(round($extra['diskmax'] / 1000000).' GB', 'r');
 		$table->add_row();
 	}
-	$frequency = $serviceInfo[$settings['PREFIX'].'_frequency'];
+	$costInfo = get_service_cost($serviceInfo, $module);
+	$frequency = $costInfo['frequency'];
 	$gbcost = round(get_reseller_price($module, 'hd', VPS_HD_COST), 2);
 	$cost = $gbcost;
 	$size = 0;
