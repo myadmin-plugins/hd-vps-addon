@@ -28,7 +28,11 @@ function vps_hdspace()
         dialog('Invalid VPS', 'Invalid VPS ID Passed');
         return false;
     }
-    $extra = parse_vps_extra($serviceInfo['vps_extra']);
+    if ($serviceInfo[$settings['PREFIX'].'_status'] != 'active') {
+        dialog('Error!', 'VPS is not active!');
+        return false;
+    }
+    $extra = parse_vps_extra($serviceInfo[$settings['PREFIX'].'_extra']);
     $table = new TFTable();
     if (mb_strpos($_SERVER['PHP_SELF'], 'iframe.php') !== false) {
         $table->set_post_location('iframe.php');
