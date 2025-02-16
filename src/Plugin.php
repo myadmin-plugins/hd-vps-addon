@@ -112,6 +112,8 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
+        $settings->setTarget('module');
         $settings->add_text_setting(self::$module, _('Addon Costs'), 'vps_hd_cost', _('VPS Additional HD Space Cost'), _('This is the cost for purchasing additional HD space for a VPS.'), $settings->get_setting('VPS_HD_COST'));
+        $settings->setTarget('global');
     }
 }
