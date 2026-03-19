@@ -1,11 +1,14 @@
 {
 	"name": "detain/myadmin-hd-vps-addon",
 	"type": "myadmin-plugin",
-	"description": "Hd Addon for VPS Module in MyAdmin",
+	"description": "HD Space addon plugin for the VPS module in MyAdmin, enabling purchase and management of additional hard drive space for virtual private servers.",
 	"keywords": [
 		"hd",
+		"vps",
+		"addon",
+		"myadmin",
 		"administration",
-		"license"
+		"disk-space"
 	],
 	"license": "LGPL-2.1-only",
 	"authors": [
@@ -23,18 +26,18 @@
 		"ext-soap": "*",
 		"symfony/event-dispatcher": "^5.0@stable",
 		"detain/myadmin-plugin-installer": "dev-master"
-    },
+	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"phpunit/phpunit-mock-objects": "*",
-		"vlucas/phpdotenv": "*",
-		"codeclimate/php-test-reporter": "dev-master",
-		"satooshi/php-coveralls": "*",
-		"codacy/coverage": "dev-master"
+		"phpunit/phpunit": "^9.6"
 	},
 	"autoload": {
 		"psr-4": {
 			"Detain\\MyAdminVpsHd\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Detain\\MyAdminVpsHd\\Tests\\": "tests/"
 		}
 	}
 }

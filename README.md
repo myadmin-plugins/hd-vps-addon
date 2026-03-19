@@ -1,28 +1,43 @@
-# Hd Addon for VPS Module in MyAdmin
+# MyAdmin HD Space VPS Addon
 
-Hd Addon for VPS Module in MyAdmin
+[![Build Status](https://github.com/detain/myadmin-hd-vps-addon/actions/workflows/tests.yml/badge.svg)](https://github.com/detain/myadmin-hd-vps-addon/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/detain/myadmin-hd-vps-addon/version)](https://packagist.org/packages/detain/myadmin-hd-vps-addon)
+[![Total Downloads](https://poser.pugx.org/detain/myadmin-hd-vps-addon/downloads)](https://packagist.org/packages/detain/myadmin-hd-vps-addon)
+[![License](https://poser.pugx.org/detain/myadmin-hd-vps-addon/license)](https://packagist.org/packages/detain/myadmin-hd-vps-addon)
 
-## Build Status and Code Analysis
+An addon plugin for the MyAdmin VPS module that enables the purchase and management of additional hard drive space for virtual private servers. This plugin integrates with the MyAdmin service platform via Symfony EventDispatcher hooks to provide HD space upselling, provisioning, and billing capabilities.
 
-Site          | Status
---------------|---------------------------
-![Travis-CI](http://i.is.cc/storage/GYd75qN.png "Travis-CI")     | [![Build Status](https://travis-ci.org/detain/myadmin-hd-vps-addon.svg?branch=master)](https://travis-ci.org/detain/myadmin-hd-vps-addon)
-![CodeClimate](http://i.is.cc/storage/GYlageh.png "CodeClimate")  | [![Code Climate](https://codeclimate.com/github/detain/myadmin-hd-vps-addon/badges/gpa.svg)](https://codeclimate.com/github/detain/myadmin-hd-vps-addon) [![Test Coverage](https://codeclimate.com/github/detain/myadmin-hd-vps-addon/badges/coverage.svg)](https://codeclimate.com/github/detain/myadmin-hd-vps-addon/coverage) [![Issue Count](https://codeclimate.com/github/detain/myadmin-hd-vps-addon/badges/issue_count.svg)](https://codeclimate.com/github/detain/myadmin-hd-vps-addon)
-![Scrutinizer](http://i.is.cc/storage/GYeUnux.png "Scrutinizer")   | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/badges/build.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/hd-vps-addon/build-status/master)
-![Codacy](http://i.is.cc/storage/GYi66Cx.png "Codacy")        | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/226251fc068f4fd5b4b4ef9a40011d06)](https://www.codacy.com/app/detain/myadmin-hd-vps-addon) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/25fa74eb74c947bf969602fcfe87e349)](https://www.codacy.com/app/detain/myadmin-hd-vps-addon?utm_source=github.com&utm_medium=referral&utm_content=detain/myadmin-hd-vps-addon&utm_campaign=Badge_Coverage)
-![Coveralls](http://i.is.cc/storage/GYjNSim.png "Coveralls")    | [![Coverage Status](https://coveralls.io/repos/github/detain/db_abstraction/badge.svg?branch=master)](https://coveralls.io/github/detain/myadmin-hd-vps-addon?branch=master)
-![Packagist](http://i.is.cc/storage/GYacBEX.png "Packagist")     | [![Latest Stable Version](https://poser.pugx.org/detain/myadmin-hd-vps-addon/version)](https://packagist.org/packages/detain/myadmin-hd-vps-addon) [![Total Downloads](https://poser.pugx.org/detain/myadmin-hd-vps-addon/downloads)](https://packagist.org/packages/detain/myadmin-hd-vps-addon) [![Latest Unstable Version](https://poser.pugx.org/detain/myadmin-hd-vps-addon/v/unstable)](//packagist.org/packages/detain/myadmin-hd-vps-addon) [![Monthly Downloads](https://poser.pugx.org/detain/myadmin-hd-vps-addon/d/monthly)](https://packagist.org/packages/detain/myadmin-hd-vps-addon) [![Daily Downloads](https://poser.pugx.org/detain/myadmin-hd-vps-addon/d/daily)](https://packagist.org/packages/detain/myadmin-hd-vps-addon) [![License](https://poser.pugx.org/detain/myadmin-hd-vps-addon/license)](https://packagist.org/packages/detain/myadmin-hd-vps-addon)
+## Features
 
+- Purchase additional HD space (1-100 GB) for VPS instances
+- Automatic billing integration with prorated pricing
+- Enable/disable HD space addons with queue-based provisioning
+- Admin settings for configuring per-GB cost
+- CSRF-protected purchase flow with slider-based UI
 
 ## Installation
 
-Install with composer like
+Install via Composer:
 
 ```sh
 composer require detain/myadmin-hd-vps-addon
 ```
 
+## Usage
+
+The plugin registers itself through the MyAdmin plugin system using Symfony EventDispatcher hooks:
+
+- `function.requirements` - Registers the VPS HD space page requirement
+- `vps.load_addons` - Registers the HD space addon handler
+- `vps.settings` - Adds HD space cost configuration to admin settings
+
+## Testing
+
+```sh
+composer install
+vendor/bin/phpunit
+```
+
 ## License
 
-The Hd Addon for VPS Module in MyAdmin class is licensed under the LGPL-v2.1 license.
-
+This package is licensed under the [LGPL-2.1](LICENSE) license.
