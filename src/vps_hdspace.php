@@ -22,7 +22,7 @@ function vps_hdspace()
     $db = get_module_db($module);
     $db2 = clone $db;
     $settings = get_module_settings($module);
-    $id = (int)$GLOBALS['tf']->variables->request['id'];
+    $id = (int)\MyAdmin\App::variables()->request['id'];
     $serviceInfo = get_service($id, $module);
     if ($serviceInfo === false) {
         dialog('Invalid VPS', 'Invalid VPS ID Passed');
@@ -74,8 +74,8 @@ function vps_hdspace()
         $table->add_row();
     }
     $cursize = $size;
-    if (isset($GLOBALS['tf']->variables->request['size'])) {
-        $size = (int)$GLOBALS['tf']->variables->request['size'];
+    if (isset(\MyAdmin\App::variables()->request['size'])) {
+        $size = (int)\MyAdmin\App::variables()->request['size'];
     }
     $cost = $size * $cost;
     $service_invoice = new \MyAdmin\Orm\Repeat_Invoice($db);
@@ -102,9 +102,9 @@ function vps_hdspace()
     }
     $cost = round($cost * $frequency, 2);
 
-    if (!isset($GLOBALS['tf']->variables->request['confirm']) || $GLOBALS['tf']->variables->request['confirm'] != 'yes') {
+    if (!isset(\MyAdmin\App::variables()->request['confirm']) || \MyAdmin\App::variables()->request['confirm'] != 'yes') {
         $table->csrf('additional_hd');
-        $GLOBALS['tf']->add_html_head_js_string('
+        \MyAdmin\App::output()->addHeadJsString('
 	jQuery(function() {
 		jQuery( "#hdslider" ).slider({
 			range: "min",
@@ -198,7 +198,7 @@ function vps_hdspace()
                     myadmin_log('vps', 'info', '	Queued Drive Update', __LINE__, __FILE__, $module);
                     //got here if the space shrank
                     add_output('Repeat Invoice Updated, Server Size Update Queued');
-                    $GLOBALS['tf']->history->add($module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', '', $serviceInfo[$settings['PREFIX'].'_custid']);
+                    \MyAdmin\App::history()->add($module.'queue', $serviceInfo[$settings['PREFIX'].'_id'], 'update_hdsize', '', $serviceInfo[$settings['PREFIX'].'_custid']);
                 }
                 if (mb_strpos($_SERVER['PHP_SELF'], 'iframe.php') === false) {
                     function_requirements('view_vps');
