@@ -76,7 +76,6 @@ function vps_hdspace() {
 - Test file assertions check string contents of `src/vps_hdspace.php` directly — keep docblock `@author`, `@package`, `@return`, `@throws` tags in that file
 - Commit messages: lowercase, descriptive (`fix addon handler`, `update hook registration`)
 
-<!-- caliber:managed:pre-commit -->
 ## Plugin contract harness
 
 This package is on the shared contract harness from `detain/myadmin-plugin-installer`.
@@ -99,6 +98,7 @@ contract class primes constants and calls `register_module()`, neither of which 
 See the `plugin-contract-tests` skill for the full workflow, and `docs/testing-harness.md` in
 the installer.
 
+<!-- caliber:managed:pre-commit -->
 ## Before Committing
 
 **IMPORTANT:** Before every git commit, you MUST ensure Caliber syncs agent configs with the latest code changes.
