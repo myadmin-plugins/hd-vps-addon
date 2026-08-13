@@ -1,6 +1,6 @@
 ---
 name: phpunit-addon-test
-description: Writes PHPUnit 9 tests for Plugin.php or vps_hdspace.php following patterns in tests/PluginTest.php and tests/VpsHdspaceFileTest.php. Use when user says 'add test', 'write test', or 'test coverage'. Uses ReflectionClass for static method/property assertions and assertStringContainsString for file-content checks — no mocking of MyAdmin globals or internals. Do NOT use for integration tests that call MyAdmin functions at runtime. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Writes PHPUnit 9 tests for Plugin.php or vps_hdspace.php following patterns in tests/PluginTest.php and tests/VpsHdspaceFileTest.php. Use when user says 'add test', 'write test', or 'test coverage'. Uses ReflectionClass for static method/property assertions and assertStringContainsString for file-content checks — no mocking of MyAdmin globals or internals. Do NOT use for integration tests that call MyAdmin functions at runtime. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
